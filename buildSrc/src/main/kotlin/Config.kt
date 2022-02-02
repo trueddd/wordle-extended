@@ -3,5 +3,6 @@ object Config {
     const val PackageName = "com.trueddd.github"
     object Windows {
         const val PackageName = "wordle-extended"
+        const val UpgradeUuid = "3f5e7263-388e-4e1e-8e9b-46a3c9c560b3"
     }
 }
