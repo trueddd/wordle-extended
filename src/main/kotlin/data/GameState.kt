@@ -8,6 +8,16 @@ data class GameState(
     val canCheckWord: Boolean
         get() = attempts.firstOrNull { it is WordState.Active }?.letters?.all { it is LetterState.Filled } ?: false
 
+    val wordGuessed: Boolean
+        get() {
+            return attempts.lastOrNull { it is WordState.Locked }?.letters
+                ?.all { it is LetterState.Filled.OnRightPlace } ?: false
+        }
+
+    val guessedAnyLetter: Boolean
+        get() = attempts.lastOrNull { it is WordState.Locked }?.letters
+            ?.any { it is LetterState.Filled.HasInWord || it is LetterState.Filled.OnRightPlace } ?: false
+
     companion object {
 
         fun create(word: String): GameState {

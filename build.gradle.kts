@@ -18,10 +18,17 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+
+    testImplementation(junitPlatform())
+    testImplementation(junitJupiter())
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "15"
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
 }
 
 compose.desktop {
