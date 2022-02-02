@@ -39,11 +39,11 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Msi)
-            packageName = Config.PackageName
+            packageName = Config.Windows.PackageName
             packageVersion = Config.Version
             windows {
                 upgradeUuid = Config.Windows.UpgradeUuid
-                iconFile.set(project.file("w_letter.png"))
+                iconFile.set(project.file("src/main/resources/w_letter.png"))
                 dirChooser = true
             }
         }
