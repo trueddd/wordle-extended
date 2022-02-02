@@ -7,4 +7,4 @@ The goal of game is to guess the word which is randomly selected from 100k+ word
 
 <img src="./screenshots/pic_1.png" height="400" />
 
-The main reason of making this game and not just playing original is the fact, that original game has one word for to guess for 24 hours.
+The main reason of making this game and not just playing original is the fact, that original game has one word for you to guess each 24 hours.
