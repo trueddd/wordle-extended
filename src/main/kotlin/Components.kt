@@ -1,5 +1,6 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import data.LetterState
+
+fun Modifier.modifyIf(condition: Boolean, block: Modifier.() -> Modifier): Modifier {
+    return if (condition) {
+        block()
+    } else {
+        this
+    }
+}
 
 @Preview
 @Composable
@@ -31,6 +40,12 @@ fun Letter(
             .padding(horizontal = 4.dp)
             .defaultMinSize(minWidth = 88.dp)
             .background(backgroundColor)
+            .modifyIf(letterState is LetterState.Filled.JustTyped) {
+                border(
+                    color = AppColors.Black,
+                    width = 4.dp,
+                )
+            }
     ) {
         Text(
             text = value,

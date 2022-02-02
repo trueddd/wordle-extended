@@ -1,6 +1,7 @@
 import androidx.compose.ui.graphics.Color
 
 object AppColors {
+    val Background = Color.LightGray
     val Grey = Color.Gray
     val Black = Color.Black
     val White = Color.White

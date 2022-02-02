@@ -18,11 +18,15 @@ data class GameState(
         get() = attempts.lastOrNull { it is WordState.Locked }?.letters
             ?.any { it is LetterState.Filled.HasInWord || it is LetterState.Filled.OnRightPlace } ?: false
 
+    val finished: Boolean
+        get() = attempts.all { it is WordState.Locked }
+
     companion object {
 
         fun create(word: String): GameState {
+            println("Guessed word: $word")
             return GameState(
-                attempts = List(5) { WordState.empty(5) },
+                attempts = List(6) { WordState.empty(5) },
                 word = word,
             )
         }
@@ -52,11 +56,22 @@ data class GameState(
         val letters = wordState.letters
             .map { if (it is LetterState.Filled) it else return this }
             .mapIndexed { index, letter ->
-                when (word.indexOf(letter.value, ignoreCase = true)) {
-                    index -> LetterState.Filled.OnRightPlace(letter.value)
-                    in 0 .. word.length -> LetterState.Filled.HasInWord(letter.value)
-                    else -> LetterState.Filled.NotPresented(letter.value)
-                }
+                if (word[index].lowercase() == letter.value.lowercase())
+                    LetterState.Filled.OnRightPlace(letter.value)
+                else
+                    letter
+            }
+            .map { letter ->
+                if (letter is LetterState.Filled.JustTyped && word.indexOf(letter.value, ignoreCase = true) in 0 .. word.length)
+                    LetterState.Filled.HasInWord(letter.value)
+                else
+                    letter
+            }
+            .map { letter ->
+                if (letter is LetterState.Filled.JustTyped)
+                    LetterState.Filled.NotPresented(letter.value)
+                else
+                    letter
             }
         return copy(attempts = attempts.mapIndexed { index, state -> if (index == activeAttemptIndex) WordState.Locked(letters) else state })
     }
